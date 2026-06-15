@@ -12,7 +12,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Add animation on scroll
+// Intersection Observer for animations
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
@@ -27,27 +27,27 @@ const observer = new IntersectionObserver(function(entries) {
     });
 }, observerOptions);
 
-// Observe all car cards and feature cards
-document.querySelectorAll('.car-card, .feature, .area-card').forEach(el => {
+// Observe cards
+document.querySelectorAll('.fleet-card, .feature-card, .area-card, .contact-card').forEach(el => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
+    el.style.transform = 'translateY(30px)';
     el.style.transition = 'all 0.6s ease';
     observer.observe(el);
 });
 
-// Add active state to navigation
+// Active navigation indicator
 window.addEventListener('scroll', () => {
     let current = '';
     const sections = document.querySelectorAll('section');
     
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        if (pageYOffset >= sectionTop - 200) {
+        if (pageYOffset >= sectionTop - 300) {
             current = section.getAttribute('id');
         }
     });
 
-    document.querySelectorAll('.nav-menu a').forEach(link => {
+    document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === '#' + current) {
             link.classList.add('active');
@@ -55,16 +55,28 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Add CSS for active navigation
+// Add active style
 const style = document.createElement('style');
 style.innerHTML = `
-    .nav-menu a.active {
-        color: #d4af37;
+    .nav-link.active {
+        color: #00d4ff !important;
+    }
+    
+    .nav-link.active::after {
+        width: 100% !important;
     }
 `;
 document.head.appendChild(style);
 
-// Melbourne-specific analytics
-console.log('✨ Prestige Rentals Melbourne - Premium Luxury Car Rental Service');
-console.log('🏙️ Serving Greater Melbourne with Mercedes & G-Wagon Rentals');
-console.log('Website loaded successfully!');
+// Parallax effect on hero
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const blobs = document.querySelectorAll('.blob');
+    blobs.forEach((blob, index) => {
+        blob.style.transform = `translateY(${scrolled * 0.5 * (index + 1)}px)`;
+    });
+});
+
+console.log('✨ Prestige Rentals Melbourne - 2026 Luxury Experience');
+console.log('🏙️ Melbourne\'s Premier Mercedes & G-Wagon Rental Service');
+console.log('Website loaded - Ready to book!');
